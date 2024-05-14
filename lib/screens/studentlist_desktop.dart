@@ -1,17 +1,17 @@
 
 import 'package:flutter/material.dart';
-import 'package:sqflite_db/screens/profile_screen.dart';
+import 'package:sqflite_db/screens/profilescreen_desktop.dart';
 import '../../../db/functions/db_functions.dart';
 import '../../../db/model/data_model.dart';
 
-class ListStudentWidget extends StatefulWidget {
-  const ListStudentWidget({super.key});
+class StudentlistDesktop extends StatefulWidget {
+  const StudentlistDesktop({super.key});
 
   @override
-  State<ListStudentWidget> createState() => _ListStudentWidgetState();
+  State<StudentlistDesktop> createState() => _StudentlistDesktopState();
 }
 
-class _ListStudentWidgetState extends State<ListStudentWidget> {
+class _StudentlistDesktopState extends State<StudentlistDesktop> {
   bool isSearching = false;
   TextEditingController searchController = TextEditingController();
   List<StudentModel> searchedStudent = [];
@@ -50,10 +50,14 @@ class _ListStudentWidgetState extends State<ListStudentWidget> {
           }
           return GridView.builder(
             padding: const EdgeInsets.all(16.0),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 0.8,
-            ),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              mainAxisExtent: 220,
+              crossAxisCount: 4,
+              childAspectRatio: MediaQuery.of(context).size.width /
+                      (MediaQuery.of(context).size.height / 1.4),
+                  mainAxisSpacing: 10.0,
+                  crossAxisSpacing: 20.0,
+                ),
             itemBuilder: (_, index) {
               final StudentModel data;
               if (isSearching &&
@@ -68,46 +72,57 @@ class _ListStudentWidgetState extends State<ListStudentWidget> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) =>
-                          ProfileScreen(data: data, index: index), 
+                          ProfilescreenDesktop(data: data, index: index), 
                     ),
                   );
                 },
-                child: Column(
-                  children: [
-                    Container(
-                      height: 120,
-                      width: 120,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        image: const DecorationImage(
-                          image: NetworkImage('https://purepng.com/public/uploads/large/purepng.com-ninjashinobininjacovert-agentassassinationguerrilla-warfaresamuraiclip-art-1421526960633owjjy.png'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black
                     ),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            data.name,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
+                    borderRadius: BorderRadius.circular(5)
+                  ),
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        height: 120,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: const DecorationImage(
+                            image: NetworkImage('https://purepng.com/public/uploads/large/purepng.com-ninjashinobininjacovert-agentassassinationguerrilla-warfaresamuraiclip-art-1421526960633owjjy.png'),
+                            fit: BoxFit.cover,
                           ),
                         ),
-                        IconButton(
-                          onPressed: () {
-                            deleteStudentAlert(context, data.id!);
-                          },
-                          color: Colors.red,
-                          icon: const Icon(Icons.delete),
-                        )
-                      ],
-                    ),
-                  ],
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              data.name,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              deleteStudentAlert(context, data.id!);
+                            },
+                            color: Colors.red,
+                            icon: const Icon(Icons.delete),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               );
             },
@@ -122,6 +137,12 @@ class _ListStudentWidgetState extends State<ListStudentWidget> {
 
   AppBar _appBar() {
     return AppBar(
+      leading: const BackButton(
+        color: Colors.white,
+      ),
+      toolbarHeight: 75,
+      backgroundColor: const Color.fromARGB(255, 169, 63, 255),
+      centerTitle: true,
       title: isSearching
           ? TextFormField(
               controller: searchController,
@@ -141,9 +162,15 @@ class _ListStudentWidgetState extends State<ListStudentWidget> {
                 border: InputBorder.none,
               ),
             )
-          : const Text('Student list'),
+          : const Text('Student list',
+            style: TextStyle(
+              fontSize: 28,
+              color: Colors.white
+            ),
+          ),
       actions: [
         IconButton(
+          color: Colors.white,
           onPressed: () {
             setState(() {
               isSearching = !isSearching;
@@ -151,7 +178,8 @@ class _ListStudentWidgetState extends State<ListStudentWidget> {
           },
           icon:
               isSearching ? const Icon(Icons.close) : const Icon(Icons.search),
-        )
+        ),
+        const SizedBox(width: 20,)
       ],
     );
   }
@@ -175,7 +203,8 @@ class _ListStudentWidgetState extends State<ListStudentWidget> {
                 Navigator.of(context).pop();
               },
               child: const Text('No'),
-            )
+            ),
+            
           ],
         );
       },

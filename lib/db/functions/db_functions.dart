@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'package:sqflite_db/db/model/data_model.dart';
 
 ValueNotifier<List<StudentModel>> studentListNotifier = ValueNotifier([]);
@@ -11,6 +12,10 @@ class DBFunctions extends ChangeNotifier{
   late Database _db; 
 
   Future<void> initializeDataBase() async{
+    if (kIsWeb) {
+  // Change default factory on the web
+  databaseFactory = databaseFactoryFfiWeb;
+}
   _db = await openDatabase('student.db', version: 1, 
                 onCreate: (Database db, int version) async{
     await db.execute('CREATE TABLE student(id INTEGER PRIMARY KEY, name TEXT, age TEXT, phoneNumber TEXT, branch TEXT)');

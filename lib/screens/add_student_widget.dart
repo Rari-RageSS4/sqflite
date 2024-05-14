@@ -30,15 +30,19 @@ class _AddStudentWidgetState extends State<AddStudentWidget> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Container(
+
                       height: 150,
                       width: 150,
                       decoration: BoxDecoration(
+
                         borderRadius: BorderRadius.circular(10),
-                        image: const DecorationImage(
-                          image: NetworkImage('https://purepng.com/public/uploads/large/purepng.com-ninjashinobininjacovert-agentassassinationguerrilla-warfaresamuraiclip-art-1421526960633owjjy.png'),
-                          fit: BoxFit.cover,
-                        ),
+                        // image: const DecorationImage(
+                        //   image: NetworkImage('https://purepng.com/public/uploads/large/purepng.com-ninjashinobininjacovert-agentassassinationguerrilla-warfaresamuraiclip-art-1421526960633owjjy.png'),
+                        //   fit: BoxFit.cover,
+                        // ),
+                        
                       ),
+                      child: Image.network('https://purepng.com/public/uploads/large/purepng.com-ninjashinobininjacovert-agentassassinationguerrilla-warfaresamuraiclip-art-1421526960633owjjy.png'),
                     ),
             const SizedBox(height: 20,),
             TextFormField(

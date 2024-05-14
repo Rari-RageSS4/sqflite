@@ -5,16 +5,16 @@ import 'package:sqflite_db/db/functions/db_functions.dart';
 import 'package:sqflite_db/screens/profilescreen_desktop.dart';
 import '../../../db/model/data_model.dart';
 
-class EditScreen extends StatefulWidget {
+class EditscreenDesktop extends StatefulWidget {
   final StudentModel data;
   final int index;
-  const EditScreen({super.key, required this.data, required this.index});
+  const EditscreenDesktop({super.key, required this.data, required this.index});
 
   @override
-  State<EditScreen> createState() => _EditScreenState();
+  State<EditscreenDesktop> createState() => _EditscreenDesktopState();
 }
 
-class _EditScreenState extends State<EditScreen> {
+class _EditscreenDesktopState extends State<EditscreenDesktop> {
   final _nameController = TextEditingController();
   final _ageController = TextEditingController();
   final _placeController = TextEditingController();
@@ -39,7 +39,14 @@ class _EditScreenState extends State<EditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit details'),
+        toolbarHeight: 75,
+        backgroundColor: const Color.fromARGB(255, 169, 63, 255),
+        title: const Text('Edit details',
+        style: TextStyle(
+            color: Colors.white,
+            fontSize: 28
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         reverse: true,
@@ -55,76 +62,83 @@ class _EditScreenState extends State<EditScreen> {
               const SizedBox(
                 height: 20,
               ),
-              TextFormField(
-                controller: _nameController,
-                decoration: const InputDecoration(
-                  hintText: 'Full name',
-                  border: OutlineInputBorder(),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: MediaQuery.sizeOf(context).width<=1100? 180: 380, vertical: 21 ),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _nameController,
+                      decoration: const InputDecoration(
+                        hintText: 'Full name',
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Enter full name';
+                        } else if (value.length < 3) {
+                          return 'Name must be at least 3 character';
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      controller: _ageController,
+                      decoration: const InputDecoration(
+                        hintText: 'Age',
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Enter your age';
+                        } else if (value.length > 2) {
+                          return 'Enter a valid age';
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      controller: _placeController,
+                      decoration: const InputDecoration(
+                        hintText: 'Place',
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Enter your place';
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                        controller: _phoneController,
+                        decoration: const InputDecoration(
+                          hintText: 'Phone number',
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Enter Phone number';
+                          } else if (value.length != 10) {
+                            return 'Enter a valid phone number';
+                          } else {
+                            return null;
+                          }
+                        }),
+                  ],
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Enter full name';
-                  } else if (value.length < 3) {
-                    return 'Name must be at least 3 character';
-                  } else {
-                    return null;
-                  }
-                },
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                controller: _ageController,
-                decoration: const InputDecoration(
-                  hintText: 'Age',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Enter your age';
-                  } else if (value.length > 2) {
-                    return 'Enter a valid age';
-                  } else {
-                    return null;
-                  }
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                controller: _placeController,
-                decoration: const InputDecoration(
-                  hintText: 'Place',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Enter your place';
-                  } else {
-                    return null;
-                  }
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                  controller: _phoneController,
-                  decoration: const InputDecoration(
-                    hintText: 'Phone number',
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Enter Phone number';
-                    } else if (value.length != 10) {
-                      return 'Enter a valid phone number';
-                    } else {
-                      return null;
-                    }
-                  }),
               const SizedBox(
                 height: 20,
               ),
