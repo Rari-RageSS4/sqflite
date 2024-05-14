@@ -89,7 +89,7 @@ class _AddStudentWidgetState extends State<AddStudentWidget> {
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Enter Phone number';
-                } else if (value.length < 10) {
+                } else if (value.length != 10) {
                   return 'Enter a valid phone number';
                 } else {
                   return null;

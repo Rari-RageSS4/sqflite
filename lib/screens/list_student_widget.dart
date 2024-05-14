@@ -75,8 +75,8 @@ class _ListStudentWidgetState extends State<ListStudentWidget> {
                 child: Column(
                   children: [
                     Container(
-                      height: 150,
-                      width: 150,
+                      height: 120,
+                      width: 120,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         image: const DecorationImage(
@@ -155,9 +155,6 @@ class _ListStudentWidgetState extends State<ListStudentWidget> {
       ],
     );
   }
-
-
-
 
   Future<void> deleteStudentAlert(context, int id) async {
     showDialog(

@@ -30,7 +30,7 @@ class ProfileScreen extends StatelessWidget {
                     radius: 50,
                     backgroundImage: NetworkImage('https://purepng.com/public/uploads/large/purepng.com-ninjashinobininjacovert-agentassassinationguerrilla-warfaresamuraiclip-art-1421526960633owjjy.png'),
                   ),
-                  Text('name: ${data.name}',
+                  Text('Name: ${data.name}',
                   style: const TextStyle(fontSize: 20),
                   ),
                   Text('Age: ${data.age}',
